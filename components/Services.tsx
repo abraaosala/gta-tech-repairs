@@ -35,6 +35,21 @@ const Services: React.FC = () => {
     }
   };
 
+  const handleServiceClick = (serviceTitle: string) => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+
+      // Dipara evento customizado para o componente Contact capturar
+      window.dispatchEvent(new CustomEvent('set-service', { detail: serviceTitle }));
+
+      const textarea = contactSection.querySelector('textarea[name="message"]') as HTMLTextAreaElement;
+      if (textarea) {
+        textarea.focus();
+      }
+    }
+  };
+
   return (
     <section id="services" className="py-24 bg-brand-dark relative">
       <div className="container mx-auto px-6">
@@ -75,7 +90,10 @@ const Services: React.FC = () => {
                       <span className="text-brand-yellow font-bold text-sm">
                         {service.price}
                       </span>
-                      <button className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-brand-cyan group-hover:text-brand-dark transition-colors">
+                      <button
+                        onClick={() => handleServiceClick(service.title)}
+                        className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-brand-cyan group-hover:text-brand-dark transition-colors"
+                      >
                         <ArrowRight size={16} />
                       </button>
                     </div>

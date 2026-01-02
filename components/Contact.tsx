@@ -18,6 +18,17 @@ const Contact: React.FC = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  React.useEffect(() => {
+    const handleSetService = (e: any) => {
+      setFormData(prev => ({
+        ...prev,
+        message: `Olá! Tenho interesse no serviço: ${e.detail}. Por favor, entre em contato para um orçamento.`
+      }));
+    };
+    window.addEventListener('set-service', handleSetService);
+    return () => window.removeEventListener('set-service', handleSetService);
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
