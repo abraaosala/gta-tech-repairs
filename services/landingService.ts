@@ -42,6 +42,7 @@ export const landingService = {
 
     async getSettings(): Promise<Record<string, string>> {
         const response = await api.get('/public/settings');
-        return response.data.data;
+        // A API retorna as configurações preparadas para o site
+        return response.data;
     }
 };
