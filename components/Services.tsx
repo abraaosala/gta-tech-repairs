@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { landingService, LandingServiceData } from '../services/landingService';
 import SectionHeading from './SectionHeading';
-import { ArrowRight, Smartphone, Battery, Cpu, Wifi, Wrench, Monitor, ShoppingCart, Laptop, ShieldCheck, HelpCircle } from 'lucide-react';
+import {
+  ArrowRight, Smartphone, Battery, Cpu, Wifi, Wrench,
+  Monitor, ShoppingCart, Laptop, ShieldCheck,
+  HelpCircle, Wind, Database, Shield
+} from 'lucide-react';
 
 // Mapeamento de ícones vindo do banco (string) para componente Lucide
 const IconMap: Record<string, any> = {
-  'Smartphone': Smartphone,
-  'Battery': Battery,
-  'Cpu': Cpu,
-  'Wifi': Wifi,
-  'Monitor': Monitor,
-  'Wrench': Wrench,
-  'ShoppingCart': ShoppingCart,
-  'Laptop': Laptop,
-  'ShieldCheck': ShieldCheck,
+  'smartphone': Smartphone,
+  'battery': Battery,
+  'cpu': Cpu,
+  'wifi': Wifi,
+  'monitor': Monitor,
+  'wrench': Wrench,
+  'shoppingcart': ShoppingCart,
+  'laptop': Laptop,
+  'shieldcheck': ShieldCheck,
+  'wind': Wind,
+  'database': Database,
+  'shield': Shield,
 };
 
 const Services: React.FC = () => {
@@ -65,7 +72,7 @@ const Services: React.FC = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service) => {
-              const ServiceIcon = IconMap[service.icon] || HelpCircle;
+              const ServiceIcon = IconMap[service.icon.toLowerCase()] || HelpCircle;
               return (
                 <div
                   key={service.id}
