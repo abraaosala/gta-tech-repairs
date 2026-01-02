@@ -1,28 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SectionHeading from './SectionHeading';
 import { Award, Users, Clock, Shield } from 'lucide-react';
+import { landingService } from '../services/landingService';
 
 const About: React.FC = () => {
+    const [settings, setSettings] = useState<Record<string, string>>({});
+
+    useEffect(() => {
+        landingService.getSettings().then(setSettings).catch(console.error);
+    }, []);
+
     const features = [
         {
             icon: Award,
             title: 'Qualidade Garantida',
-            description: 'Utilizamos apenas peças originais e de alta qualidade em todos os nossos reparos.'
+            description: settings.feature_quality_desc || 'Utilizamos apenas peças originais e de alta qualidade em todos os nossos reparos.'
         },
         {
             icon: Users,
             title: 'Equipe Especializada',
-            description: 'Técnicos certificados e experientes em reparos de smartphones e computadores.'
+            description: settings.feature_team_desc || 'Técnicos certificados e experientes em reparos de smartphones e computadores.'
         },
         {
             icon: Clock,
             title: 'Atendimento Rápido',
-            description: 'Maioria dos reparos concluídos no mesmo dia, sem comprometer a qualidade.'
+            description: settings.feature_speed_desc || 'Maioria dos reparos concluídos no mesmo dia, sem comprometer a qualidade.'
         },
         {
             icon: Shield,
             title: 'Garantia Total',
-            description: 'Todos os serviços incluem garantia para sua total tranquilidade.'
+            description: settings.feature_warranty_desc || 'Todos os serviços incluem garantia para sua total tranquilidade.'
         }
     ];
 
@@ -40,14 +47,18 @@ const About: React.FC = () => {
 
                 <div className="max-w-4xl mx-auto mb-16">
                     <p className="text-gray-300 text-lg leading-relaxed text-center mb-6">
-                        A <span className="text-brand-cyan font-bold">GTA-Tech</span> é referência em assistência técnica
-                        de smartphones e computadores em Cabinda. Com anos de experiência no mercado, oferecemos
-                        soluções completas para todos os seus dispositivos eletrônicos.
+                        {settings.about_intro ? (
+                            <span dangerouslySetInnerHTML={{ __html: settings.about_intro }} />
+                        ) : (
+                            <>
+                                A <span className="text-brand-cyan font-bold">GTA-Tech</span> é referência em assistência técnica
+                                de smartphones e computadores em Cabinda. Com anos de experiência no mercado, oferecemos
+                                soluções completas para todos os seus dispositivos eletrônicos.
+                            </>
+                        )}
                     </p>
                     <p className="text-gray-400 text-center leading-relaxed">
-                        Nossa missão é proporcionar serviços de alta qualidade com preços justos, garantindo
-                        a satisfação total dos nossos clientes. Além de reparos, também oferecemos venda de
-                        equipamentos novos e seminovos, películas protetoras e acessórios.
+                        {settings.about_mission || "Nossa missão é proporcionar serviços de alta qualidade com preços justos, garantindo a satisfação total dos nossos clientes. Além de reparos, também oferecemos venda de equipamentos novos e seminovos, películas protetoras e acessórios."}
                     </p>
                 </div>
 
@@ -74,19 +85,19 @@ const About: React.FC = () => {
                 {/* Stats */}
                 <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
                     <div className="text-center">
-                        <div className="text-4xl md:text-5xl font-black text-brand-cyan mb-2">5+</div>
+                        <div className="text-4xl md:text-5xl font-black text-brand-cyan mb-2">{settings.stats_years || "5+"}</div>
                         <div className="text-gray-400 text-sm uppercase tracking-wide">Anos de Experiência</div>
                     </div>
                     <div className="text-center">
-                        <div className="text-4xl md:text-5xl font-black text-brand-cyan mb-2">1000+</div>
+                        <div className="text-4xl md:text-5xl font-black text-brand-cyan mb-2">{settings.stats_clients || "1000+"}</div>
                         <div className="text-gray-400 text-sm uppercase tracking-wide">Clientes Satisfeitos</div>
                     </div>
                     <div className="text-center">
-                        <div className="text-4xl md:text-5xl font-black text-brand-cyan mb-2">98%</div>
+                        <div className="text-4xl md:text-5xl font-black text-brand-cyan mb-2">{settings.stats_success || "98%"}</div>
                         <div className="text-gray-400 text-sm uppercase tracking-wide">Taxa de Sucesso</div>
                     </div>
                     <div className="text-center">
-                        <div className="text-4xl md:text-5xl font-black text-brand-cyan mb-2">24h</div>
+                        <div className="text-4xl md:text-5xl font-black text-brand-cyan mb-2">{settings.stats_support || "24h"}</div>
                         <div className="text-gray-400 text-sm uppercase tracking-wide">Suporte Disponível</div>
                     </div>
                 </div>
@@ -96,3 +107,4 @@ const About: React.FC = () => {
 };
 
 export default About;
+
