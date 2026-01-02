@@ -38,5 +38,10 @@ export const landingService = {
     async sendContact(data: ContactFormData) {
         const response = await api.post('/public/contact', data);
         return response.data;
+    },
+
+    async getSettings(): Promise<Record<string, string>> {
+        const response = await api.get('/public/settings');
+        return response.data.data;
     }
 };
