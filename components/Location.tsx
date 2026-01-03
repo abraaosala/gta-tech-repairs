@@ -24,7 +24,7 @@ const Location: React.FC = () => {
             <div className="relative rounded-[2rem] overflow-hidden border-4 border-white/10 shadow-2xl">
               {/* Image of repair workbench/microscope */}
               <img
-                src="https://images.unsplash.com/photo-1588508065123-287b28e013da?q=80&w=1000&auto=format&fit=crop"
+                src={settings.location_image_url || "https://images.unsplash.com/photo-1588508065123-287b28e013da?q=80&w=1000&auto=format&fit=crop"}
                 alt="Laboratório de Reparação GTA-Tech"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
               />
@@ -97,7 +97,7 @@ const Location: React.FC = () => {
               <Button
                 variant="secondary"
                 className="w-full md:w-auto"
-                onClick={() => window.open(settings.maps_url || "https://maps.google.com", "_blank")}
+                onClick={() => window.open(settings.location_gmaps_url || "https://maps.google.com", "_blank")}
               >
                 Abrir no Google Maps
               </Button>
